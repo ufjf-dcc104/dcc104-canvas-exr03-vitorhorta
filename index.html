@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>DCC104 - Exemplo 02</title>
+    <script src="ImageLoader.js" charset="utf-8"></script>
+    <script src="AudioLoader.js" charset="utf-8"></script>
+    <script src="Sprite.js" charset="utf-8"></script>
+    <script src="Level.js" charset="utf-8"></script>
+    <script src="Player.js" charset="utf-8"></script>
+    <script src="Shot.js" charset="utf-8"></script>
+    <script src="Enemy.js" charset="utf-8"></script>
+    <script src="ColisionObservable.js" charset="utf-8"></script>
+</head>
+<body>
+<h1>DCC104 - Exemplo 02</h1>
+<canvas></canvas>
+<script>
+
+
+    var eCanvas = initCanvas();
+    var colisionObservable = new ColisionObservable();
+    var ctx = eCanvas.getContext("2d");
+    ctx.font="20px Arial";
+    var il =initImageLoader();
+    var al = initAudioLoader();
+    var atual = new Date();
+    var anterior = new Date();
+    var dt = 0;
+    var player = new Player();
+    player.imageLib = il;
+    player.colisionObservable = colisionObservable;
+    colisionObservable.add(player);
+    var level = new Level();
+    level.imageLib = il;
+    level.colisionObservable = colisionObservable;
+    level.init();
+    level.player = player;
+    desenha();
+    var gameRunning = true;
+
+    function initImageLoader(){
+        var il = new ImageLoader();
+        il.load("pc", "images/frame-1.png");
+        il.load("enemy", "images/enemy_1.png");
+        il.load("shot", "images/shot.png");
+        return il;
+    }
+
+    function initAudioLoader(){
+        var al = new AudioLoader();
+        al.load("shot", "audios/Missle_Launch-Kibblesbob-2118796725.mp3");
+        al.load("boom", "audios/Grenade-SoundBible.com-1777900486.mp3");
+        return al;
+    }
+    function initCanvas(){
+        var eCanvas = document.getElementsByTagName("canvas")[0];
+        eCanvas.width = 600;
+        eCanvas.height = 380;
+        return eCanvas
+    }
+    function desenha(){
+        if(gameRunning == false) return;
+        requestAnimationFrame(desenha);
+        atual = new Date();
+        dt = (atual - anterior)/1000;
+        ctx.clearRect(0,0,eCanvas.width, eCanvas.height);
+        ctx.strokeRect(0,0,eCanvas.width, eCanvas.height);
+        ctx.fillStyle = "darkgreen";
+        ctx.fillText("Energia", 10, 30);
+        ctx.fillStyle = 'green';
+        ctx.fillRect(10,50,player.hp,20);
+        ctx.fillText("Vida: " + player.vidas, 400, 40);
+        ctx.fillText("Pontos: " + player.pontos, 400, 80);
+        level.respawn(dt);
+//        level.perseguir(player.sprite,dt);
+        player.mover(dt);
+        level.moverAng(dt);
+
+        colisionObservable.checkColisions();
+
+        player.desenharImg(ctx, il.images["pc"]);
+//        level.desenharImg(ctx);
+        level.desenhar(ctx);
+
+        anterior = atual;
+    }
+
+    document.addEventListener("playerDies", function(e) {
+        gameRunning = false;
+        ctx.fillText("GAME OVER",200,200);
+    });
+
+</script>
+</body>
+
+
+
+
+</html>
