@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>DCC104 - Exemplo 02</title>
+    <title>DCC104 - Flappy</title>
     <script src="ImageLoader.js" charset="utf-8"></script>
     <script src="AudioLoader.js" charset="utf-8"></script>
     <script src="Sprite.js" charset="utf-8"></script>
@@ -13,7 +13,7 @@
     <script src="ColisionObservable.js" charset="utf-8"></script>
 </head>
 <body>
-<h1>DCC104 - Exemplo 02</h1>
+<h1>DCC104 - Flappy</h1>
 <canvas></canvas>
 <script>
 
@@ -58,8 +58,8 @@
     }
     function initCanvas(){
         var eCanvas = document.getElementsByTagName("canvas")[0];
-        eCanvas.width = 600;
-        eCanvas.height = 380;
+        eCanvas.width = 800;
+        eCanvas.height = 580;
         return eCanvas
     }
     function desenha(){
@@ -79,7 +79,7 @@
 //        level.perseguir(player.sprite,dt);
         player.mover(dt);
         level.moverAng(dt);
-        ctx.drawImage(il.images["bg"], 1, -200,700,700);
+        ctx.drawImage(il.images["bg"], 1, -300,900,1100);
 
         colisionObservable.checkColisions();
         time++;
