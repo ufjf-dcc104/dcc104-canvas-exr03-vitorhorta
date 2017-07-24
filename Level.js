@@ -2,7 +2,7 @@ function Level() {
     this.colisionObservable = null;
     this.enemies = [];
     this.shots = [];
-    this.inimigosRespawn = 1;
+    this.inimigosRespawn = 4;
     this.player = null;
     this.respawnCooldown = 0;
     this.maxCooldown = 3;
@@ -54,9 +54,9 @@ Level.prototype.desenhar = function (ctx) {
         this.enemies[i].desenhar(ctx);
     }
 };
-Level.prototype.desenharImg = function (ctx) {
+Level.prototype.desenharImg = function (ctx,img) {
     for (var i = 0; i < this.enemies.length; i++) {
-        this.enemies[i].desenharImg(ctx, this.imageLib.images[this.enemies[i].imgkey]);
+        this.enemies[i].desenharImg(ctx, img);
     }
 };
 

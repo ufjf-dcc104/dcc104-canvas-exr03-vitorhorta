@@ -9,7 +9,7 @@ function Enemy(){
     this.sprite.y = this.y;
     this.sprite.ay = 0.0;
     this.sprite.vy = 0.0;
-    this.sprite.vx = -60.0;
+    this.sprite.vx = -120.0;
     this.shots = [];
     this.colisionResolver = null;
 }

@@ -38,10 +38,13 @@
     level.player = player;
     desenha();
     var gameRunning = true;
-
+    var time = 0;
     function initImageLoader(){
         var il = new ImageLoader();
         il.load("pc", "images/frame-1.png");
+        il.load("missile", "images/frame1.png");
+        il.load("bg", "images/country_field.png");
+        il.load("tile", "images/tile121.png");
         il.load("enemy", "images/enemy_1.png");
         il.load("shot", "images/shot.png");
         return il;
@@ -76,13 +79,15 @@
 //        level.perseguir(player.sprite,dt);
         player.mover(dt);
         level.moverAng(dt);
+        ctx.drawImage(il.images["bg"], 1, -200,700,700);
 
         colisionObservable.checkColisions();
-
+        time++;
         player.desenharImg(ctx, il.images["pc"]);
 //        level.desenharImg(ctx);
-        level.desenhar(ctx);
-
+        level.desenharImg(ctx, il.images["missile"]);
+        ctx.fillStyle = "darkgreen";
+        ctx.fillText("Pontos: " + time, 10, 30);
         anterior = atual;
     }
 
